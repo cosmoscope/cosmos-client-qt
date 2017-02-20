@@ -6,8 +6,8 @@ from ..qt.data_view_item import DataViewItem
 
 
 class PyQtGraphDataViewItem(DataViewItem):
-    def __init__(self, *args, **kwargs):
-        super(PyQtGraphDataViewItem, self).__init__(*args, **kwargs)
+    def __init__(self, title="", *args, **kwargs):
+        super(PyQtGraphDataViewItem, self).__init__(title=title, *args, **kwargs)
 
         self._plots = {}
         self._plot_widget = PlotWidget()
