@@ -17,7 +17,7 @@
    <bool>false</bool>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
-   <bool>true</bool>
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="central_widget">
    <property name="sizePolicy">
@@ -188,7 +188,7 @@ QTabBar::tab:last {
 }</string>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <property name="documentMode">
          <bool>false</bool>
