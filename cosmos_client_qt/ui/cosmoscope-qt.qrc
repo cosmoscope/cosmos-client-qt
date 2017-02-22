@@ -1,6 +1,9 @@
 <RCC>
   <qresource prefix="tool_bar">
+    <file>images/Delete-80.png</file>
+    <file>images/Plus Math-80.png</file>
     <file>images/Add File-80.png</file>
+    <file>images/Plus-80.png</file>
     <file>images/Delete File-80.png</file>
     <file>images/New Document-80.png</file>
     <file>images/Open Folder-80.png</file>
