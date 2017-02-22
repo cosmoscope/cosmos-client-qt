@@ -1,12 +1,18 @@
 from qtpy.QtCore import Qt
 from qtpy.QtCore import QAbstractListModel, QVariant, QModelIndex, QSize
-from qtpy.QtGui import QColor, QPixmap, QPainter, QIcon
 
 import qtawesome as qta
 
-from ..widgets import resource
+from ..singletons import Singleton
+import six
+from sip import wrappertype
 
 
+class ModelMetaProxy(Singleton, wrappertype):
+    pass
+
+
+@six.add_metaclass(ModelMetaProxy)
 class DataListModel(QAbstractListModel):
     def __init__(self, *args, **kwargs):
         super(DataListModel, self).__init__(*args, **kwargs)
@@ -29,7 +35,17 @@ class DataListModel(QAbstractListModel):
                             active='fa.circle-o',
                             color='blue',
                             color_active='orange')
-
             return icon
 
         return QVariant()
+
+    def setData(self, index, value):
+        if not index.isValid():
+            return False
+
+        if not 0 <= index.row() < self.rowCount():
+            self._data.append(value)
+        else:
+            self._data[index.row()] = value
+
+        return True

@@ -1,13 +1,18 @@
 import os
 import sys
 
-from qtpy.QtWidgets import QApplication #, QWidget, QVBoxLayout, QMainWindow
+from qtpy.QtWidgets import QApplication, QWidget, QVBoxLayout, QMainWindow
 from qtpy.uic import loadUi
 
 from cosmos_client_qt.models.model import DataListModel
 from cosmos_client_qt.viewers.plotly.web_plot import WebPlot
 
 from cosmos_client_qt.widgets import resource
+
+
+class App(QApplication):
+    def __init__(self, *args, **kwargs):
+        super(App, self).__init__(*args, **kwargs)
 
 
 if __name__ == '__main__':
