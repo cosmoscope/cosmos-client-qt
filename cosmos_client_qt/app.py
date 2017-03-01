@@ -45,10 +45,17 @@ class MainWindow(_MainWindowProxy):
         # Set main window title
         self.setWindowTitle('Cosmoscope')
 
-        self.plot_tab_area.addTab(BokehPlot(), "New Tab")
+        self._add_tab_button.pressed.connect(self.add_plot_tab)
 
-    def add_plot_tab(self, plotter):
-        self._main_window.plot_tab_area.addTab(plotter, "Plot")
+    def setup_connections(self):
+        pass
+
+    def add_plot_tab(self, name=None):
+        if name is None:
+            count = self.plot_tab_area.count() + 1
+            name = "Plot {}".format(count)
+
+        self.plot_tab_area.addTab(BokehPlot(), name)
 
 
 def main():

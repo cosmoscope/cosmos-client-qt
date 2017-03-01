@@ -86,7 +86,7 @@
          </size>
         </property>
         <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
+         <enum>Qt::ClickFocus</enum>
         </property>
         <property name="styleSheet">
          <string notr="true">.QLineEdit {
@@ -193,6 +193,9 @@ QTabBar::tab:last {
         </property>
         <property name="currentIndex">
          <number>0</number>
+        </property>
+        <property name="usesScrollButtons">
+         <bool>true</bool>
         </property>
         <property name="documentMode">
          <bool>false</bool>

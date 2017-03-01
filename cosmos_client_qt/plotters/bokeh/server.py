@@ -10,25 +10,38 @@ from bokeh.server.server import Server
 
 io_loop = IOLoop.current()
 
-def modify_doc(doc):
-    x = np.linspace(0, 10, 1000)
-    y = np.log(x) * np.sin(x)
 
-    source = ColumnDataSource(data=dict(x=x, y=y))
+class Test:
+    def __init__(self):
+        x = np.linspace(0, 10, 1000)
+        y = np.log(x) * np.sin(x)
 
-    plot = figure()
-    plot.line('x', 'y', source=source)
+        source = ColumnDataSource(data=dict(x=x, y=y))
 
-    slider = Slider(start=1, end=10, value=1, step=0.1)
+        plot = figure()
+        plot.line('x', 'y', source=source)
 
-    def callback(attr, old, new):
-        y = np.log(x) * np.sin(x*new)
-        source.data = dict(x=x, y=y)
-    slider.on_change('value', callback)
+        slider = Slider(start=1, end=10, value=1, step=0.1)
 
-    doc.add_root(column(slider, plot))
+        def callback(attr, old, new):
+            y = np.log(x) * np.sin(x*new)
+            source.data = dict(x=x, y=y)
 
-bokeh_app = Application(FunctionHandler(modify_doc))
+        slider.on_change('value', callback)
 
-server = Server({'/': bokeh_app}, io_loop=io_loop)
-server.start()
+        bokeh_app = Application(FunctionHandler(
+            lambda doc: doc.add_root(column(plot))
+        ))
+
+        bokeh_app.on_server_loaded = lambda x: print("Server loaded")
+        bokeh_app.on_session_created = lambda x: print("Session created")
+        bokeh_app.on_server_unloaded = lambda x: print("Server unloaded")
+        bokeh_app.on_session_destroyed = lambda x: print("Session destroyed")
+
+        server = Server({'/': bokeh_app}, io_loop=io_loop)
+        server.start()
+        server.run_until_shutdown()
+
+
+if __name__ == '__main__':
+    Test()
