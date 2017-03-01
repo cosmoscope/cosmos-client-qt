@@ -124,7 +124,7 @@
          </size>
         </property>
         <property name="focusPolicy">
-         <enum>Qt::ClickFocus</enum>
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="styleSheet">
          <string notr="true">.QListView {
@@ -158,11 +158,12 @@
           <height>0</height>
          </size>
         </property>
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
         <property name="styleSheet">
-         <string notr="true">QTabWidget::pane { /* The tab widget frame */
+         <string notr="true">.QTabWidget {
+	border: none;
+}
+
+QTabWidget::pane { /* The tab widget frame */
 	border-top: 1px solid #999999;
 }
 QTabWidget::tab-bar {
@@ -221,7 +222,6 @@ QTabBar::tab:last {
      </layout>
     </item>
    </layout>
-   <zorder>pushButton</zorder>
   </widget>
   <widget class="QMenuBar" name="menu_bar">
    <property name="geometry">
@@ -318,7 +318,7 @@ QTabBar::tab:last {
   </widget>
   <action name="action_new">
    <property name="icon">
-    <iconset resource="cosmoscope-qt.qrc">
+    <iconset resource="cosmoscope_qt.qrc">
      <normaloff>:/tool_bar/images/New Document-80.png</normaloff>:/tool_bar/images/New Document-80.png</iconset>
    </property>
    <property name="text">
@@ -336,7 +336,7 @@ QTabBar::tab:last {
   </action>
   <action name="action_open">
    <property name="icon">
-    <iconset resource="cosmoscope-qt.qrc">
+    <iconset resource="cosmoscope_qt.qrc">
      <normaloff>:/tool_bar/images/Open Folder-80.png</normaloff>:/tool_bar/images/Open Folder-80.png</iconset>
    </property>
    <property name="text">
@@ -354,7 +354,7 @@ QTabBar::tab:last {
   </action>
   <action name="action_save">
    <property name="icon">
-    <iconset resource="cosmoscope-qt.qrc">
+    <iconset resource="cosmoscope_qt.qrc">
      <normaloff>:/tool_bar/images/Save-80.png</normaloff>:/tool_bar/images/Save-80.png</iconset>
    </property>
    <property name="text">
@@ -372,7 +372,7 @@ QTabBar::tab:last {
   </action>
   <action name="action_load">
    <property name="icon">
-    <iconset resource="cosmoscope-qt.qrc">
+    <iconset resource="cosmoscope_qt.qrc">
      <normaloff>:/tool_bar/images/Add File-80.png</normaloff>:/tool_bar/images/Add File-80.png</iconset>
    </property>
    <property name="text">
@@ -387,7 +387,7 @@ QTabBar::tab:last {
   </action>
   <action name="action_remove">
    <property name="icon">
-    <iconset resource="cosmoscope-qt.qrc">
+    <iconset resource="cosmoscope_qt.qrc">
      <normaloff>:/tool_bar/images/Delete File-80.png</normaloff>:/tool_bar/images/Delete File-80.png</iconset>
    </property>
    <property name="text">
@@ -478,8 +478,5 @@ QTabBar::tab:last {
    </property>
   </action>
  </widget>
- <resources>
-  <include location="cosmoscope-qt.qrc"/>
- </resources>
  <connections/>
 </ui>

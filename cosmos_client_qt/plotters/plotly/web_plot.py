@@ -10,8 +10,8 @@ class WebPlot:
     def __init__(self):
         self._id = str(uuid.uuid4())
 
-        self._data = Data([Scatter(x=np.arange(10000),
-                                   y=np.random.sample(10000))])
+        self._data = Data([Scatter(x=np.arange(10),
+                                   y=np.random.sample(10))])
 
         self._layout =  Layout(xaxis=XAxis(title='Life Expectancy'),
                                yaxis=YAxis(title='GDP per Capita'),
@@ -22,13 +22,21 @@ class WebPlot:
         self._div = plotly.offline.plot(self._fig, auto_open=False,
                                         output_type='div',
                                         include_plotlyjs=False,
-                                        show_link=False)
+                                        show_link=False,
+                                        filename=self._id)
+
+        print(self._div)
 
         self.set_data(False)
 
     def set_data(self, data, type="scatter"):
-        self._fig.update_data(data=[Scatter(x=np.arange(10000),
-                                            y=np.random.sample(10000))])
+        self._data = Data([Scatter(x=np.arange(10),
+                                   y=np.random.sample(10))])
+        plotly.offline.plot(self._fig, auto_open=False,
+                            output_type='div',
+                            include_plotlyjs=False,
+                            show_link=False,
+                            filename=self._id)
 
     def html(self):
         with open(os.path.join(os.path.dirname(__file__), "template.html")) as f:
