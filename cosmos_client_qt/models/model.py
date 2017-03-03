@@ -43,7 +43,7 @@ class DataListModel(QAbstractListModel):
     def removeRows(self, p_int, p_int_1, parent=QModelIndex(), *args, **kwargs):
         self.beginRemoveRows(parent, p_int, p_int_1)
 
-        del self._data[p_int, p_int_1 + 1]
+        del self._data[p_int:p_int_1 + 1]
 
         self.endRemoveRows()
 
