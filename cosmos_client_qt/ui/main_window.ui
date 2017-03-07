@@ -17,7 +17,7 @@
    <bool>false</bool>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
-   <bool>false</bool>
+   <bool>true</bool>
   </property>
   <widget class="QWidget" name="central_widget">
    <property name="sizePolicy">
@@ -321,7 +321,7 @@ QTabBar::tab:last {
   </widget>
   <action name="action_new">
    <property name="icon">
-    <iconset resource="cosmoscope_qt.qrc">
+    <iconset>
      <normaloff>:/tool_bar/images/New Document-80.png</normaloff>:/tool_bar/images/New Document-80.png</iconset>
    </property>
    <property name="text">
@@ -339,7 +339,7 @@ QTabBar::tab:last {
   </action>
   <action name="action_open">
    <property name="icon">
-    <iconset resource="cosmoscope_qt.qrc">
+    <iconset>
      <normaloff>:/tool_bar/images/Open Folder-80.png</normaloff>:/tool_bar/images/Open Folder-80.png</iconset>
    </property>
    <property name="text">
@@ -357,7 +357,7 @@ QTabBar::tab:last {
   </action>
   <action name="action_save">
    <property name="icon">
-    <iconset resource="cosmoscope_qt.qrc">
+    <iconset>
      <normaloff>:/tool_bar/images/Save-80.png</normaloff>:/tool_bar/images/Save-80.png</iconset>
    </property>
    <property name="text">
@@ -375,7 +375,7 @@ QTabBar::tab:last {
   </action>
   <action name="action_load">
    <property name="icon">
-    <iconset resource="cosmoscope_qt.qrc">
+    <iconset>
      <normaloff>:/tool_bar/images/Add File-80.png</normaloff>:/tool_bar/images/Add File-80.png</iconset>
    </property>
    <property name="text">
@@ -390,7 +390,7 @@ QTabBar::tab:last {
   </action>
   <action name="action_remove">
    <property name="icon">
-    <iconset resource="cosmoscope_qt.qrc">
+    <iconset>
      <normaloff>:/tool_bar/images/Delete File-80.png</normaloff>:/tool_bar/images/Delete File-80.png</iconset>
    </property>
    <property name="text">
@@ -481,5 +481,6 @@ QTabBar::tab:last {
    </property>
   </action>
  </widget>
+ <resources/>
  <connections/>
 </ui>

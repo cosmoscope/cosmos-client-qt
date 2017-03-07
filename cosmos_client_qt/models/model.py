@@ -7,15 +7,9 @@ from ..singletons import Singleton
 import six
 from sip import wrappertype
 
-from pivot.hub import Hub
-from ..messages import AddDataMessage
+from ..messages import *
 
 
-class _ModelMetaProxy(Singleton, wrappertype):
-    pass
-
-
-@six.add_metaclass(_ModelMetaProxy)
 class DataListModel(QAbstractListModel):
     def __init__(self, *args, **kwargs):
         super(DataListModel, self).__init__(*args, **kwargs)
@@ -23,7 +17,7 @@ class DataListModel(QAbstractListModel):
         self._data = []
 
         # Subscribe to hub messages
-        self._hub = Hub()
+        self._hub = CentralHub()
         self._hub.subscribe(AddDataMessage, self.setData, self)
 
     def add_data(self, data, row=None, parent=QModelIndex()):
@@ -57,7 +51,7 @@ class DataListModel(QAbstractListModel):
         row = index.row()
 
         if role == Qt.DisplayRole:
-            return str(self._data[row])
+            return str(self._data[row].name)
         elif role == Qt.DecorationRole:
             icon = qta.icon('fa.circle',
                             active='fa.circle-o',

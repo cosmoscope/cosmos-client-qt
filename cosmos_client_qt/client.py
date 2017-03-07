@@ -1,30 +1,42 @@
 import six
-import zerorpc
+from zerorpc import Subscriber, Pusher, Client
 import logging
 import gevent
 
 from .singletons import Singleton
+from .messages import *
 
 
-@six.add_metaclass(Singleton)
-class Client:
-    def __init__(self, address="tcp://localhost:4242"):
+class ClientAPI(Subscriber):
+    def __init__(self, client_ip, *args, **kwargs):
+        super(ClientAPI, self).__init__(*args, **kwargs)
+
         # Setup pusher
-        self.pusher = zerorpc.Pusher()
-        self.pusher.bind(address)
+        self.client = Client()
+        self.client.bind(client_ip)
 
-        # Setup subscriber
-        service1 = Subscriber()
-        subscriber1 = zerorpc.Subscriber(service1)
-        subscriber1.connect(endpoint)
-        gevent.spawn(subscriber1.run)
+        # Connect to message hub
+        self._hub = CentralHub()
 
-    def __call__(self, name, async=True, *args, **kwargs):
-        kwargs.update({'async': async})
+        self._hub.subscribe(LoadDataMessage, self.client.load_data, self)
 
-        if hasattr(self.pusher, name):
-            result = getattr(self.pusher, name)(*args, **kwargs)
+    def data_loaded(self, data):
+        self._hub.publish(AddDataMessage, data)
 
-            return result
+    def data_unloaded(self, data):
+        pass
 
-        logging.error("Server has no function {}.".format(name))
+
+def start(server_ip=None, client_ip=None):
+    server_ip = server_ip or "ipc://127.0.0.1:4242"
+    client_ip = client_ip or "ipc://127.0.0.1:4243"
+
+    # Setup the pull service
+    client = ClientAPI(client_ip)
+    client.connect(server_ip)
+
+    gevent.spawn(client.run)
+
+    logging.info(
+        "[client] Client is now sending on {} and listening on {}.".format(
+            client_ip, server_ip))
