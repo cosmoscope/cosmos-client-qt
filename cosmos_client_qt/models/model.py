@@ -7,7 +7,7 @@ from ..singletons import Singleton
 import six
 from sip import wrappertype
 
-from ..messages import *
+from ..hub import *
 
 
 class DataListModel(QAbstractListModel):
@@ -17,7 +17,7 @@ class DataListModel(QAbstractListModel):
         self._data = []
 
         # Subscribe to hub messages
-        self._hub = CentralHub()
+        self._hub = Hub()
         self._hub.subscribe(AddDataMessage, self.setData, self)
 
     def add_data(self, data, row=None, parent=QModelIndex()):

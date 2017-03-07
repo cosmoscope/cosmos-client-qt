@@ -12,7 +12,7 @@ from .plotters.bokeh.plots import BokehPlot
 from .client import start
 
 from .ui.cosmoscope_qt_rc import *
-from .messages import *
+from .hub import *
 
 
 _MainWindowUI, _MainWindowBase = loadUiType(
@@ -42,7 +42,7 @@ class MainWindow(_MainWindowProxy):
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         # Setup hub connection
-        self._hub = CentralHub()
+        self._hub = Hub()
 
         # Initialize model
         self._data_list_model = DataListModel()

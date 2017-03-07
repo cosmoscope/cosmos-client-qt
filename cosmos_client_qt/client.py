@@ -4,7 +4,7 @@ import logging
 import gevent
 
 from .singletons import Singleton
-from .messages import *
+from .hub import *
 
 
 class ClientAPI(Subscriber):
@@ -16,7 +16,7 @@ class ClientAPI(Subscriber):
         self.client.bind(client_ip)
 
         # Connect to message hub
-        self._hub = CentralHub()
+        self._hub = Hub()
 
         self._hub.subscribe(LoadDataMessage, self.client.load_data, self)
 
