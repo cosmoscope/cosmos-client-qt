@@ -21,7 +21,11 @@ class ClientAPI(Subscriber):
         self._hub.subscribe(LoadDataMessage, self.client.load_data, self)
 
     def data_loaded(self, data):
-        self._hub.publish(AddDataMessage, data)
+        import msgpack
+
+        unpacked_data = msgpack.unpackb(data, object_hook=data.decode)
+
+        self._hub.publish(AddDataMessage, unpacked_data)
 
     def data_unloaded(self, data):
         pass

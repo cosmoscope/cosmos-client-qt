@@ -25,11 +25,11 @@ class Hub:
     def unsubscribe(self, message, subscriber):
         self._subscriptions.get(message, []).remove(subscriber)
 
-    def publish(self, message, publisher=None, *args, **kwargs):
-        print("Sending message {}".format(message))
+    def publish(self, message, *args, publisher=None, **kwargs):
+        logging.info("[client] Sending message {} {} {}".format(
+            message, args, kwargs))
         subs = self._subscriptions.get(message, [])
-        filt_subs = [rec.handler(*args, **kwargs)
-                     for rec in subs if rec.filter(message, publisher)]
+        [rec.handler(*args) for rec in subs if rec.filter(message, publisher)]
 
 
 @six.add_metaclass(abc.ABCMeta)
