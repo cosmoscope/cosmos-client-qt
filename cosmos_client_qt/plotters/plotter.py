@@ -2,6 +2,9 @@ from qtpy.uic import loadUiType, loadUi
 import os
 import six, abc
 from sip import wrappertype
+from ..models.model import DataListModel
+
+from ..hub import *
 
 
 _PlotTabUI, _PlotTabBase = loadUiType(
@@ -20,8 +23,17 @@ class _PlotterMetaProxy(abc.ABCMeta, wrappertype):
 
 @six.add_metaclass(_PlotterMetaProxy)
 class Plotter(_PlotterProxy):
+    def __init__(self, *args, **kwargs):
+        super(Plotter, self).__init__(*args, **kwargs)
+        # Initialize model
+        self._data_list_model = DataListModel()
+
+    @property
+    def data_model(self):
+        return self._data_list_model
+
     @abc.abstractmethod
-    def add_data(self):
+    def add_data(self, *args, **kwargs):
         raise NotImplementedError
 
     @abc.abstractmethod

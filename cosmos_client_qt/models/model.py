@@ -7,18 +7,12 @@ from ..singletons import Singleton
 import six
 from sip import wrappertype
 
-from ..hub import *
-
 
 class DataListModel(QAbstractListModel):
     def __init__(self, *args, **kwargs):
         super(DataListModel, self).__init__(*args, **kwargs)
 
         self._data = []
-
-        # Subscribe to hub messages
-        self._hub = Hub()
-        self._hub.subscribe(AddDataMessage, self.setData, self)
 
     def add_data(self, data, row=None, parent=QModelIndex()):
         self.beginInsertRows(parent, row or self.rowCount(), 1)

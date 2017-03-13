@@ -26,8 +26,8 @@ class Hub:
         self._subscriptions.get(message, []).remove(subscriber)
 
     def publish(self, message, *args, publisher=None, **kwargs):
-        logging.info("[client] Sending message {} {} {}".format(
-            message, args, kwargs))
+        logging.info("[client] Sending message {}".format(message))
+
         subs = self._subscriptions.get(message, [])
         [rec.handler(*args) for rec in subs if rec.filter(message, publisher)]
 

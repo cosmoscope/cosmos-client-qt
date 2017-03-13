@@ -3,6 +3,8 @@ from zerorpc import Subscriber, Pusher, Client
 import logging
 import gevent
 
+from cosmoscope.core.spectra import Spectrum1D
+
 from .singletons import Singleton
 from .hub import *
 
@@ -23,7 +25,7 @@ class ClientAPI(Subscriber):
     def data_loaded(self, data):
         import msgpack
 
-        unpacked_data = msgpack.unpackb(data, object_hook=data.decode)
+        unpacked_data = msgpack.unpackb(data, object_hook=Spectrum1D.decode)
 
         self._hub.publish(AddDataMessage, unpacked_data)
 
