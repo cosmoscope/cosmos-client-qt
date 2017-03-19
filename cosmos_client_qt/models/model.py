@@ -45,7 +45,7 @@ class DataListModel(QAbstractListModel):
         row = index.row()
 
         if role == Qt.DisplayRole:
-            return str(self._data[row].name)
+            return str(self._data[row].name.decode("utf-8"))
         elif role == Qt.DecorationRole:
             icon = qta.icon('fa.circle',
                             active='fa.circle-o',

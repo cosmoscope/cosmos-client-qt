@@ -4,8 +4,11 @@ import logging
 
 from qtpy.QtCore import QSize
 from qtpy.QtCore import Qt
-from qtpy.QtWidgets import QApplication, QToolButton, QFileDialog
+from qtpy.QtWidgets import QApplication, QToolButton, QFileDialog, QPushButton, QTabBar, QWidget
 from qtpy.uic import loadUiType, loadUi
+from qtpy.QtCore import Signal
+
+import qtawesome as qta
 
 from .plotters.bokeh.plots import BokehPlot
 from .client import start
@@ -24,14 +27,7 @@ class _MainWindowProxy(_MainWindowBase, _MainWindowUI):
         self.setupUi(self)
 
         # Clear tab area
-        self.plot_tab_area.clear()
-
-        # Make corner button
-        self._add_tab_button = QToolButton()
-        self._add_tab_button.setFixedSize(QSize(29, 29))
-        self._add_tab_button.setText("+")
-        self.plot_tab_area.setCornerWidget(self._add_tab_button,
-                                           Qt.TopRightCorner)
+        # self.plot_tab_area.clear()
 
         # Set main window title
         self.setWindowTitle('Cosmoscope')
@@ -51,9 +47,6 @@ class MainWindow(_MainWindowProxy):
         self.new_plot_tab()
 
     def setup_connections(self):
-        # Connect tab opening buttons
-        self._add_tab_button.pressed.connect(self.new_plot_tab)
-
         # Tab closing connections
         def remove_tab(index):
             widget = self.plot_tab_area.widget(index)
@@ -74,11 +67,13 @@ class MainWindow(_MainWindowProxy):
         # Open data file action
         self.action_open.triggered.connect(self.file_open)
 
+        # Open data file action
+        self.action_load.triggered.connect(lambda x: self.new_plot_tab())
+
     def _set_data_model(self, index):
         widget = self.plot_tab_area.widget(index)
-        print("Changing model")
 
-        if widget is not None:
+        if widget is not None and hasattr(widget, 'data_model'):
             self.data_view.setModel(widget.data_model)
 
     def file_open(self):
@@ -94,7 +89,7 @@ class MainWindow(_MainWindowProxy):
         new_plot = BokehPlot()
         self.plot_tab_area.addTab(new_plot, name)
         self.plot_tab_area.setCurrentWidget(new_plot)
-        self.plot_tab_area.currentWidget().add_data()
+        new_plot.add_data()
 
     def add_data(self, data):
         print("Adding data", data.name)
@@ -111,7 +106,9 @@ def main():
     start()
 
     app = QApplication(sys.argv)
-    app.setAttribute(Qt.AA_DontCreateNativeWidgetSiblings, True)
+    app.setAttribute(Qt.AA_DontCreateNativeWidgetSiblings)
+
+    print(app.testAttribute(Qt.AA_DontCreateNativeWidgetSiblings))
 
     main_window = MainWindow()
     main_window.show()

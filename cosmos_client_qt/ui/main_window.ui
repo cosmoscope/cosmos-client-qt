@@ -13,11 +13,14 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <property name="documentMode">
    <bool>false</bool>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
-   <bool>true</bool>
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="central_widget">
    <property name="sizePolicy">
@@ -91,8 +94,9 @@
         <property name="styleSheet">
          <string notr="true">.QLineEdit {
 	border: none;
+	border-top: 1px solid #cccccc;
 	border-bottom: 1px solid #cccccc;
-	border-right: 1px solid rgb(143, 140, 143);
+	border-right: 1px solid #cccccc;
 }</string>
         </property>
         <property name="placeholderText">
@@ -124,12 +128,16 @@
          </size>
         </property>
         <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
+         <enum>Qt::ClickFocus</enum>
         </property>
         <property name="styleSheet">
          <string notr="true">.QListView {
 	border: none;
-	border-right: 1px solid rgb(143, 140, 143);
+	border-right: 1px solid #cccccc;
+}
+
+QAbstractItemView::item {
+  min-height : 32px;
 }</string>
         </property>
         <property name="frameShape">
@@ -164,32 +172,50 @@
 }
 
 QTabWidget::pane { /* The tab widget frame */
-	border-top: 1px solid #999999;
+	border-top: 1px solid #cccccc;
+	margin-top: -1px;
 }
+
 QTabWidget::tab-bar {
-	left: 0px; /* move to the right by 5px */
+	left: 0px;
 }
+
 /* Style the tab using the tab sub-control. Note that it reads QTabBar _not_ QTabWidget */
 QTabBar::tab {
 	background: rgb(128, 128, 128);
 	border: none;
-	border-right: 1px solid rgb(143, 140, 143);
 	padding: 6px 16px 7px 16px;
 }
-QTabBar::tab:selected, QTabBar::tab:hover {
-	background: #999999;
+
+QTabBar::close-button {
+	subcontrol-position: right;
 }
+
+QTabBar::tab:selected:first, QTabBar::tab:selected:only-one {
+	border-left: 1px solid #ffffff;
+}
+
 QTabBar::tab:selected {
 	color: #000000;
-	background-color: rgb(211, 208, 211);
+	background-color: #ffffff;
+	border-top: 1px solid #cccccc; /*rgb(0, 128, 255);*/
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
 }
+
 QTabBar::tab:!selected {
 	color: rgb(102, 102, 102);
-	background-color: rgb(175, 174, 175);
+	background-color: none;
+	margin-top: 1px;
 }
+
 QTabBar::tab:last {
 	/* border-right: 1px solid rgb(143, 140, 143); */
-}</string>
+}
+
+/*QTabBar::tab:first {
+	margin-left: -1px;
+}*/</string>
         </property>
         <property name="currentIndex">
          <number>0</number>
@@ -291,6 +317,12 @@ QTabBar::tab:last {
   <widget class="QToolBar" name="tool_bar">
    <property name="windowTitle">
     <string>toolBar</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QToolBar {
+	background: none;
+	border: none;
+}</string>
    </property>
    <property name="movable">
     <bool>false</bool>

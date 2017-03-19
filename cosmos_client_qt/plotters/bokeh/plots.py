@@ -10,6 +10,8 @@ from bokeh.plotting import figure, curdoc
 from bokeh.server.server import Server
 from bokeh.embed import autoload_server
 
+from bokeh.models import LinearAxis, Range1d, DataRange1d
+
 from qtpy.QtCore import QUrl, QEventLoop, QThread
 
 import numpy as np
@@ -57,23 +59,33 @@ class BokehPlot(Plotter):
         app.on_server_unloaded = lambda x: print("[server] Bokeh server unloaded")
         app.on_session_destroyed = lambda x: print("[server] Bokeh session destroyed")
 
+        # Pass the app to the server and start the server
         self._server = Server({'/': app}, io_loop=io_loop, port=next(ports))
         self._server.start()
 
+        # Set the Qt web view to the url of the plot renderer
         self.web_engine_view.setUrl(QUrl("http://localhost:{}/".format(
             self._server.port)))
 
+        # Pre-define the data containers that will be re-used
         data = {'py{}'.format(i): [None]*100 for i in range(10)}
         data.update({'px{}'.format(i): [None]*100 for i in range(10)})
 
         self._source = ColumnDataSource(data=data)
 
+        # Pre-define the plot containers that will be re-used
         self._line_collection = [(i, self._fig.line('px{}'.format(i),
                                                 'py{}'.format(i),
                                                 source=self._source))
                                  for i in range(10)]
 
         self._data_collection = {}
+
+        # Extend the figure to include another x-axis
+        self._fig.extra_x_ranges = {"pixel": DataRange1d()}
+
+        # Adding the second axis to the plot.
+        self._fig.add_layout(LinearAxis(x_range_name="pixel"), 'above')
 
     def _update_doc(self, x, y, p_ind):
         data = self._source.data
